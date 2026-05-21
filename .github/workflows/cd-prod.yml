@@ -7,26 +7,23 @@ jobs:
   deploy-prod:
     name: Deploy → Production (Clever Cloud)
     runs-on: ubuntu-latest
-    # L'environment "production" doit être configuré sur GitHub avec un reviewer obligatoire
-    # Settings → Environments → production → Required reviewers
     environment: production
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Deploy to Clever Cloud (production)
-        uses: 47ng/actions-clever-cloud@v2
-        with:
-          appID: ${{ secrets.CLEVER_APP_ID_PROD }}
-        env:
-          CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
-          CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
+        run: |
+          git remote add clever "${{ secrets.CLEVER_REMOTE_PROD }}"
+          git push clever HEAD:master --force
 
       - name: Créer le tag de release
         run: |
           VERSION=$(grep '^version' Cargo.toml | head -1 | awk -F'"' '{print $2}')
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag "v$VERSION" -m "Release v$VERSION"
-          git push origin "v$VERSION"
+          git tag "v$VERSION" -m "Release v$VERSION" || echo "Tag déjà existant, on continue"
+          git push origin "v$VERSION" || true
