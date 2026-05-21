@@ -1,0 +1,22 @@
+name: CD Staging
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-staging:
+    name: Deploy → Staging (Clever Cloud)
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to Clever Cloud (staging)
+        uses: 47ng/actions-clever-cloud@v2
+        with:
+          appID: ${{ secrets.CLEVER_APP_ID_STAGING }}
+        env:
+          CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
+          CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
