@@ -12,11 +12,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Deploy to Clever Cloud (staging)
-        uses: 47ng/actions-clever-cloud@v2
-        with:
-          appID: ${{ secrets.CLEVER_APP_ID_STAGING }}
-        env:
-          CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
-          CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
+        run: |
+          git remote add clever "${{ secrets.CLEVER_REMOTE_STAGING }}"
+          git push clever HEAD:master --force
