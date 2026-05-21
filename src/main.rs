@@ -16,7 +16,11 @@ async fn main() -> std::io::Result<()> {
     let jwt_secret = cfg.jwt_secret.clone();
 
     HttpServer::new(move || {
+        let allowed_origin = std::env::var("CORS_ALLOWED_ORIGIN")
+            .unwrap_or_else(|_| "http://localhost:3000".to_string());
+
         let cors = Cors::default()
+            .allowed_origin(&allowed_origin)
             .allowed_origin("http://localhost:3000")
             .allowed_methods(vec!["GET", "POST", "PUT", "PATCH", "DELETE"])
             .allowed_headers(vec![
