@@ -1,0 +1,5 @@
+{
+  "titre": "L'échelle de Holmes et Rahe",
+  "resume": "Outil scientifique pour évaluer votre niveau de stress selon les événements de vie.",
+  "contenu": "L'échelle de Holmes et Rahe est un outil développé en 1967 par les psychiatres Thomas Holmes et Richard Rahe pour mesurer le niveau de stress lié aux événements de vie.\n\n## Principe\n\nChaque événement de vie majeur est associé à un score en \"unités de changement de vie\" (UCV). Plus le score cumulé est élevé sur une année, plus le risque de développer des problèmes de santé est important.\n\n## Événements les plus stressants\n\n| Événement | Score |\n|-----------|-------|\n| Décès du conjoint | 100 |\n| Divorce | 73 |\n| Séparation | 65 |\n| Emprisonnement | 63 |\n| Décès d'un proche | 63 |\n| Maladie/accident | 53 |\n| Mariage | 50 |\n| Licenciement | 47 |\n\n## Interprétation\n\n- Moins de 150 : risque faible\n- 150 à 299 : risque modéré (50% de chances de problèmes de santé)\n- 300 et plus : risque élevé (80% de chances)"
+}
