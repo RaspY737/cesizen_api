@@ -15,6 +15,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Configurer la clé SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.CLEVER_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H push-n3-par-clevercloud-customers.services.clever-cloud.com >> ~/.ssh/known_hosts
+
       - name: Deploy to Clever Cloud (production)
         run: |
           git remote add clever "${{ secrets.CLEVER_REMOTE_PROD }}"
@@ -25,5 +32,5 @@ jobs:
           VERSION=$(grep '^version' Cargo.toml | head -1 | awk -F'"' '{print $2}')
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag "v$VERSION" -m "Release v$VERSION" || echo "Tag déjà existant, on continue"
+          git tag "v$VERSION" -m "Release v$VERSION" || echo "Tag déjà existant"
           git push origin "v$VERSION" || true
